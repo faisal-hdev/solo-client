@@ -21,14 +21,15 @@ const Login = () => {
     }
   };
 
-  // email password signIn
+  // Email password signIn
   const handleSignIn = async (e) => {
-    console.log("sign in clk");
     e.preventDefault();
+    console.log("sign in clk");
     const form = e.target;
     const email = form.email.value;
-    const pass = form.pass.value;
+    const pass = form.password.value;
     console.log(email, pass);
+    // console.log(email);
     try {
       //user login
       const result = await signIn(email, pass);

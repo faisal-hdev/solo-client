@@ -1,8 +1,49 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import registerBg from "../../assets/images/register.jpg";
+import { useContext } from "react";
+import { AuthContext } from "./../../providers/AuthProvider";
+import toast from "react-hot-toast";
 
 const Registration = () => {
+  const navigate = useNavigate();
+  const { user, setUser, createUser, signInWithGoogle, updateUserProfile } =
+    useContext(AuthContext);
+
+  // handle signUp
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const photo = form.photo.value;
+    const pass = form.password.value;
+    console.log(name, email, photo, pass);
+    try {
+      // user registration
+      const result = await createUser(email, pass);
+      console.log(result);
+      await updateUserProfile(name, photo);
+      setUser({ ...user, photoURL: photo, displayName: name });
+      navigate("/");
+      toast.success("SignUp Successful");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
+  };
+
+  // google signIn
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithGoogle();
+      toast.success("Sign in Successful");
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.message);
+    }
+  };
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-6 md:my-10 lg:my-16">
       <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl ">
@@ -10,12 +51,13 @@ const Registration = () => {
           <div className="flex justify-center mx-auto">
             <img className="w-auto h-7 sm:h-8" src={logo} alt="" />
           </div>
-
           <p className="mt-3 text-xl text-center text-gray-600 ">
             Get Your Free Account Now.
           </p>
-
-          <div className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 ">
+          <div
+            onClick={handleGoogleLogin}
+            className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 "
+          >
             <div className="px-4 py-2">
               <svg className="w-6 h-6" viewBox="0 0 40 40">
                 <path
@@ -41,7 +83,6 @@ const Registration = () => {
               Sign in with Google
             </span>
           </div>
-
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b  lg:w-1/4"></span>
 
@@ -51,7 +92,7 @@ const Registration = () => {
 
             <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/4"></span>
           </div>
-          <form>
+          <form onSubmit={handleSignUp}>
             <div className="mt-4">
               <label
                 className="block mb-2 text-sm font-medium text-gray-600 "
@@ -125,7 +166,6 @@ const Registration = () => {
               </button>
             </div>
           </form>
-
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b  md:w-1/4"></span>
 
