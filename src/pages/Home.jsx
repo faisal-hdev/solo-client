@@ -1,5 +1,13 @@
+import Carousel from "../components/Carousel";
+import TabCategory from "../components/TabCategory";
+
 const Home = () => {
-  return <div>{/* <h2 className="text-5xl">This is Home</h2> */}</div>;
+  return (
+    <div>
+      <Carousel />
+      <TabCategory />
+    </div>
+  );
 };
 
 export default Home;
