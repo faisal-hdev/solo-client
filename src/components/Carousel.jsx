@@ -1,11 +1,7 @@
-// import React, { useRef, useState } from "react";
-// import "./styles.css";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import bgImage1 from "../assets/images/carousel1.jpg";
 import bgImage2 from "../assets/images/carousel2.jpg";
 import bgImage3 from "../assets/images/carousel3.jpg";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -17,7 +13,7 @@ import Slide from "./Slide";
 
 export default function Carousel() {
   return (
-    <div className="px-5 py-5 md:py-8 lg:py-12 w-full lg:max-w-7xl mx-auto">
+    <div className="py-5 md:py-8 lg:py-12">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

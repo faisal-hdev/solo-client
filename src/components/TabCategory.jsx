@@ -1,12 +1,25 @@
+/* eslint-disable react/prop-types */
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import JobCard from "./JobCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
 // import JobCard from "./JobCard";
 
 const TabCategory = () => {
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/jobs`);
+      setJobs(data);
+    };
+    getData();
+  }, []);
+
   return (
     <Tabs>
-      <div className="px-5 py-5 md:py-8 lg:py-12 w-full lg:max-w-7xl mx-auto">
+      <div className="py-5 md:py-8 lg:py-12">
         <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
           Browse Jobs By Categories
         </h1>
@@ -25,14 +38,33 @@ const TabCategory = () => {
         </div>
 
         <TabPanel>
-          <JobCard />
+          <div className="grid gap-8 mt-8 xl:mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {jobs
+              .filter((job) => job.category === "web development")
+              .map((job) => (
+                <JobCard key={job._id} job={job} />
+              ))}
+          </div>
         </TabPanel>
 
         <TabPanel>
-          <h2>Any content 2</h2>
+          <div className="grid gap-8 mt-8 xl:mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {jobs
+              .filter((job) => job.category === "graphics design")
+              .map((job) => (
+                <JobCard key={job._id} job={job} />
+              ))}
+          </div>
         </TabPanel>
+
         <TabPanel>
-          <h2>Any content 3</h2>
+          <div className="grid gap-8 mt-8 xl:mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {jobs
+              .filter((job) => job.category === "digital marketing")
+              .map((job) => (
+                <JobCard key={job._id} job={job} />
+              ))}
+          </div>
         </TabPanel>
       </div>
     </Tabs>
