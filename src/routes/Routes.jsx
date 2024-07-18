@@ -4,16 +4,22 @@ import Home from "../pages/Home";
 import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
 import JobDetails from "../pages/JobDetails";
+import AddJob from "../pages/AddJob";
+import ErrorPage from "../pages/ErrorPage";
+import MyPostedJobs from "../pages/MyPostJobs";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Home />,
       },
+      { path: "/add-job", element: <AddJob /> },
+      { path: "/my-posted-jobs", element: <MyPostedJobs /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       {

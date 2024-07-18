@@ -40,7 +40,7 @@ const TabCategory = () => {
         <TabPanel>
           <div className="grid gap-8 mt-8 xl:mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {jobs
-              .filter((job) => job.category === "web development")
+              .filter((job) => job.category === "Web Development")
               .map((job) => (
                 <JobCard key={job._id} job={job} />
               ))}
@@ -50,7 +50,7 @@ const TabCategory = () => {
         <TabPanel>
           <div className="grid gap-8 mt-8 xl:mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {jobs
-              .filter((job) => job.category === "graphics design")
+              .filter((job) => job.category === "Graphics Design")
               .map((job) => (
                 <JobCard key={job._id} job={job} />
               ))}
@@ -60,7 +60,7 @@ const TabCategory = () => {
         <TabPanel>
           <div className="grid gap-8 mt-8 xl:mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {jobs
-              .filter((job) => job.category === "digital marketing")
+              .filter((job) => job.category === "Digital Marketing")
               .map((job) => (
                 <JobCard key={job._id} job={job} />
               ))}
