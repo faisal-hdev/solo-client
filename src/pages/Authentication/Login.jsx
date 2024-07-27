@@ -35,7 +35,7 @@ const Login = () => {
       const result = await signIn(email, pass);
       console.log(result);
       navigate("/");
-      toast.success("Signin Successful");
+      toast.success("Sign in Successful");
     } catch (err) {
       console.log(err);
       toast.error(err.message);

@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -28,6 +28,7 @@ const JobDetails = () => {
     const form = e.target;
     const jobId = _id;
     const price = parseFloat(form.price.value);
+
     if (price < parseFloat(min_price))
       return toast.error("Offer more or at least equal to minimum price.");
     const comment = form.comment.value;
@@ -73,7 +74,6 @@ const JobDetails = () => {
             {category}
           </span>
         </div>
-
         <div>
           <h1 className="mt-2 text-3xl font-semibold text-gray-800 ">
             {job_title}
@@ -119,7 +119,6 @@ const JobDetails = () => {
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
               />
             </div>
-
             <div>
               <label className="text-gray-700 " htmlFor="emailAddress">
                 Email Address

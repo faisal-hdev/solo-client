@@ -11,6 +11,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -37,6 +38,7 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true);
+    toast.success("Logout Successful");
     return signOut(auth);
   };
 
