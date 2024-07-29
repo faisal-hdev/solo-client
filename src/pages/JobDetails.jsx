@@ -28,15 +28,13 @@ const JobDetails = () => {
     const form = e.target;
     const jobId = _id;
     const price = parseFloat(form.price.value);
-
     if (price < parseFloat(min_price))
       return toast.error("Offer more or at least equal to minimum price.");
+
     const comment = form.comment.value;
     const email = user?.email;
     const status = "Pending";
     const deadline = startDate;
-    // const email = form.email.value;
-    // const buyer_Email = buyer_email;
     const bidData = {
       jobId,
       price,
@@ -46,9 +44,10 @@ const JobDetails = () => {
       comment,
       email,
       status,
-      // buyer_email,
+      buyer_Email: buyer?.email,
+      buyer,
     };
-    // console.table(bidData);
+
     // Data send to the server
     try {
       const { data } = await axios.post(

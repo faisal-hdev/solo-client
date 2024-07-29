@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import registerBg from "../../assets/images/register.jpg";
 import { useContext } from "react";
@@ -7,6 +7,9 @@ import toast from "react-hot-toast";
 
 const Registration = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state || "/";
+  // const navigate = useNavigate();
   const { user, setUser, createUser, signInWithGoogle, updateUserProfile } =
     useContext(AuthContext);
 
@@ -25,7 +28,7 @@ const Registration = () => {
       console.log(result);
       await updateUserProfile(name, photo);
       setUser({ ...user, photoURL: photo, displayName: name });
-      navigate("/");
+      navigate(from, { replace: true });
       toast.success("SignUp Successful");
     } catch (err) {
       console.log(err);
@@ -38,7 +41,7 @@ const Registration = () => {
     try {
       await signInWithGoogle();
       toast.success("Sign in Successful");
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
       toast.error(err?.message);

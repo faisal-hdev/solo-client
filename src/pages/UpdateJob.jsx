@@ -19,6 +19,7 @@ const UpdateJob = () => {
     min_price,
   } = job || {};
   const [startDate, setStartDate] = useState(new Date(deadline) || new Date());
+
   const handleFromSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -38,6 +39,7 @@ const UpdateJob = () => {
       min_price,
       buyer: { email, name: user?.displayName, photo: user?.photoURL },
     };
+
     try {
       const { data } = await axios.put(
         `${import.meta.env.VITE_API_URL}/job/${_id}`,
@@ -57,7 +59,6 @@ const UpdateJob = () => {
         <h2 className="text-lg font-semibold text-gray-700 capitalize ">
           Update a Job
         </h2>
-
         <form onSubmit={handleFromSubmit}>
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
