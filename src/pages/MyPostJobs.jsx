@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
@@ -33,7 +34,6 @@ const MyPostedJobs = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-
       // refresh UI
       getData();
     } catch (error) {

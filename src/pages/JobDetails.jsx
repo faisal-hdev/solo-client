@@ -47,6 +47,7 @@ const JobDetails = () => {
       buyer_Email: buyer?.email,
       buyer,
     };
+    form.reset();
 
     // Data send to the server
     try {
