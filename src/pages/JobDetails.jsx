@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
@@ -7,9 +7,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const JobDetails = () => {
-  const [startDate, setStartDate] = useState(new Date());
   const job = useLoaderData();
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const [startDate, setStartDate] = useState(new Date());
   const {
     _id,
     category,
@@ -30,7 +31,6 @@ const JobDetails = () => {
     const price = parseFloat(form.price.value);
     if (price < parseFloat(min_price))
       return toast.error("Offer more or at least equal to minimum price.");
-
     const comment = form.comment.value;
     const email = user?.email;
     const status = "Pending";
@@ -47,17 +47,19 @@ const JobDetails = () => {
       buyer_Email: buyer?.email,
       buyer,
     };
-    form.reset();
 
+    form.reset();
     // Data send to the server
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/bid`,
         bidData
       );
-      toast.success("Your Bid Successful");
+      toast.success("Bid Place Successfully!");
+      navigate("/my-bids");
       console.log(data);
     } catch (error) {
+      toast.error("error.message");
       console.log(error);
     }
   };
@@ -159,7 +161,7 @@ const JobDetails = () => {
               type="submit"
               className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
             >
-              Place Bid
+              Apply Bid
             </button>
           </div>
         </form>

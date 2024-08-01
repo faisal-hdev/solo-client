@@ -20,7 +20,7 @@ const BidRequests = () => {
   console.log(bids);
 
   return (
-    <section className="container px-4 mx-auto pt-12">
+    <section className="md:px-4 lg:px-0 mx-auto py-12">
       <div className="flex items-center gap-x-3">
         <h2 className="text-lg font-medium text-gray-800 ">Bid Requests</h2>
         <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full ">
@@ -96,10 +96,8 @@ const BidRequests = () => {
                         {bid.email}
                       </td>
                       <td className="px-4 text-sm py-4  font-medium text-gray-500  whitespace-nowrap">
-                        {/* 10/04/2024 */}
                         {new Date(bid.deadline).toLocaleDateString()}
                       </td>
-
                       <td className="px-4 text-sm py-4  font-medium text-gray-500  whitespace-nowrap">
                         ${bid.price}
                       </td>
@@ -126,14 +124,35 @@ const BidRequests = () => {
                         </div>
                       </td>
                       <td className="px-4 text-sm py-4 font-medium text-gray-700 whitespace-nowrap">
-                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 text-yellow-500">
+                        <div
+                          className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 text-yellow-500  
+                            ${
+                              bid.status === "Pending" &&
+                              "bg-yellow-100/60 text-yellow-500"
+                            }
+                            ${
+                              bid.status === "In Progress" &&
+                              "bg-blue-100/60 bg-blue-500"
+                            }
+                            ${
+                              bid.status === "Complete" &&
+                              "bg-emerald-100/60 bg-emerald-500"
+                            }
+                            ${
+                              bid.status === "Rejected" &&
+                              "bg-red-100/60 bg-red-500"
+                            }`}
+                        >
                           <span className="h-1.5 w-1.5 rounded-full bg-yellow-500"></span>
-                          <h2 className="text-sm font-medium ">Pending</h2>
+                          <h2 className="text-sm font-medium ">{bid.status}</h2>
                         </div>
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-6">
-                          <button className="text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none">
+                          <button
+                            disabled={bid.status === "Complete"}
+                            className="text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -149,8 +168,10 @@ const BidRequests = () => {
                               />
                             </svg>
                           </button>
-
-                          <button className="text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none">
+                          <button
+                            disabled={bid.status === "Complete"}
+                            className="text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"

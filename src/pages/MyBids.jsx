@@ -20,7 +20,7 @@ const MyBids = () => {
   console.log(bids);
 
   return (
-    <section className="container px-4 mx-auto pt-12">
+    <section className="md:px-4 lg:px-0 mx-auto py-12">
       <div className="flex items-center gap-x-3">
         <h2 className="text-lg font-medium text-gray-800">My Bids</h2>
         <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full ">
@@ -83,12 +83,9 @@ const MyBids = () => {
                       <td className="px-4 py-4 text-sm font-medium text-gray-500  whitespace-nowrap">
                         {bid.job_title}
                       </td>
-
                       <td className="px-4 py-4 text-sm font-medium text-gray-500  whitespace-nowrap">
-                        {/* {bid.deadline} */}
                         {new Date(bid.deadline).toLocaleDateString()}
                       </td>
-
                       <td className="px-4 py-4 text-sm font-medium text-gray-500  whitespace-nowrap">
                         ${bid.price}
                       </td>

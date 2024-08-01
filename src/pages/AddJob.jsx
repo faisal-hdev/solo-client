@@ -19,7 +19,7 @@ const AddJob = () => {
     const deadline = startDate;
     const category = form.category.value;
     const min_price = parseFloat(form.min_price.value);
-    const max_price = parseFloat(form.min_price.value);
+    const max_price = parseFloat(form.max_price.value);
     const description = form.description.value;
     const jobData = {
       job_title,
@@ -46,8 +46,8 @@ const AddJob = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12">
-      <section className=" p-2 md:p-6 mx-auto bg-white rounded-md shadow-md ">
+    <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12 md:px-4 lg:px-0">
+      <section className="p-2 max-md: w-full md:p-6 mx-auto bg-white rounded-md shadow-md ">
         <h2 className="text-lg font-semibold text-gray-700 capitalize ">
           Post a Job
         </h2>
@@ -80,10 +80,9 @@ const AddJob = () => {
             </div>
             <div className="flex flex-col gap-2 ">
               <label className="text-gray-700">Deadline</label>
-
               {/* Date Picker Input Field */}
               <DatePicker
-                className="border p-2 rounded-md"
+                className="border p-2 rounded-md w-full"
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
               />
