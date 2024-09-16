@@ -26,11 +26,14 @@ const JobDetails = () => {
     e.preventDefault();
     if (user?.email === buyer?.email)
       return toast.error("Action not permitted");
+
     const form = e.target;
     const jobId = _id;
     const price = parseFloat(form.price.value);
+
     if (price < parseFloat(min_price))
       return toast.error("Offer more or at least equal to minimum price.");
+
     const comment = form.comment.value;
     const email = user?.email;
     const status = "Pending";
@@ -44,7 +47,6 @@ const JobDetails = () => {
       comment,
       email,
       status,
-      buyer_Email: buyer?.email,
       buyer,
     };
 

@@ -31,6 +31,7 @@ const AddJob = () => {
       buyer: { email, name: user?.displayName, photo: user?.photoURL },
     };
     console.table(jobData);
+
     // Data send to the server
     try {
       const { data } = await axios.post(

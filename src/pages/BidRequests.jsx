@@ -10,6 +10,7 @@ const BidRequests = () => {
   useEffect(() => {
     getData();
   }, [user]);
+
   const getData = async () => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_API_URL}/bid-request/${user?.email}`
@@ -18,6 +19,8 @@ const BidRequests = () => {
   };
 
   console.log(bids);
+
+  const handleStatus = () => {};
 
   return (
     <section className="md:px-4 lg:px-0 mx-auto py-12">
@@ -97,6 +100,7 @@ const BidRequests = () => {
                       </td>
                       <td className="px-4 text-sm py-4  font-medium text-gray-500  whitespace-nowrap">
                         {new Date(bid.deadline).toLocaleDateString()}
+                        {/* {bid.deadline} */}
                       </td>
                       <td className="px-4 text-sm py-4  font-medium text-gray-500  whitespace-nowrap">
                         ${bid.price}

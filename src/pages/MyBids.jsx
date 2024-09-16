@@ -6,6 +6,7 @@ import axios from "axios";
 const MyBids = () => {
   const { user } = useContext(AuthContext);
   const [bids, setBids] = useState([]);
+  console.log(bids);
 
   useEffect(() => {
     getData();
@@ -17,7 +18,7 @@ const MyBids = () => {
     setBids(data);
   };
 
-  console.log(bids);
+  // console.log(bids);
 
   return (
     <section className="md:px-4 lg:px-0 mx-auto py-12">
