@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
+// import toast from "react-hot-toast";
 
 const BidRequests = () => {
   const { user } = useContext(AuthContext);
@@ -20,7 +21,20 @@ const BidRequests = () => {
 
   console.log(bids);
 
-  const handleStatus = () => {};
+  const handleStatus = async (id, prevStatus, status) => {
+    if (prevStatus === status)
+      return (
+        // toast.error("Its already In Processing"),
+        console.log("Sorry it not allowed")
+      );
+    console.log(id, prevStatus, status);
+    const { data } = await axios.patch(
+      `${import.meta.env.VITE_API_URL}/bid/${id}`,
+      { status }
+    );
+    getData();
+    console.log(data);
+  };
 
   return (
     <section className="md:px-4 lg:px-0 mx-auto py-12">
@@ -129,33 +143,53 @@ const BidRequests = () => {
                       </td>
                       <td className="px-4 text-sm py-4 font-medium text-gray-700 whitespace-nowrap">
                         <div
-                          className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 text-yellow-500  
-                            ${
-                              bid.status === "Pending" &&
-                              "bg-yellow-100/60 text-yellow-500"
-                            }
+                          className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow100/60 text-yellow500 ${
+                            bid.status === "Pending" &&
+                            "bg-yellow-100/60 text-yellow-500"
+                          }
                             ${
                               bid.status === "In Progress" &&
-                              "bg-blue-100/60 bg-blue-500"
+                              "bg-blue-100/60 text-blue-500"
                             }
                             ${
                               bid.status === "Complete" &&
-                              "bg-emerald-100/60 bg-emerald-500"
+                              "bg-emerald-100/60 text-emerald-500"
                             }
                             ${
                               bid.status === "Rejected" &&
-                              "bg-red-100/60 bg-red-500"
+                              "bg-red-100/60 text-red-500"
                             }`}
                         >
-                          <span className="h-1.5 w-1.5 rounded-full bg-yellow-500"></span>
+                          {/* <span className="h-1.5 w-1.5 rounded-full bg-yellow-500"></span> */}
+                          <span
+                            className={`h-1.5 w-1.5 rounded-full ${
+                              bid.status === "Pending" &&
+                              "bg-yellow-400 text-yellow500"
+                            }
+                            ${
+                              bid.status === "In Progress" &&
+                              "bg-blue-400 text-blue500"
+                            }
+                            ${
+                              bid.status === "Complete" &&
+                              "bg-emerald-400 text-emerald500"
+                            }
+                            ${
+                              bid.status === "Rejected" &&
+                              "bg-red-400 text-red500"
+                            }`}
+                          ></span>
                           <h2 className="text-sm font-medium ">{bid.status}</h2>
                         </div>
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-6">
                           <button
+                            onClick={() => {
+                              handleStatus(bid._id, bid.status, "In Progress");
+                            }}
                             disabled={bid.status === "Complete"}
-                            className="text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none"
+                            className="text-gray-500 transition-colors duration-200 hover:text-red-500 focus:outline-none"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -172,9 +206,14 @@ const BidRequests = () => {
                               />
                             </svg>
                           </button>
+
+                          {/* Reject Button */}
                           <button
+                            onClick={() =>
+                              handleStatus(bid._id, bid.status, "Rejected")
+                            }
                             disabled={bid.status === "Complete"}
-                            className="text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
+                            className="text-gray-500 transition-colors duration-200 hover:text-yellow-500 focus:outline-none"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
