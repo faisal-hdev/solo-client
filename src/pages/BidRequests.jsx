@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const BidRequests = () => {
   const { user } = useContext(AuthContext);
@@ -19,23 +19,17 @@ const BidRequests = () => {
     setBids(data);
   };
 
-  console.log(bids);
-
   const handleStatus = async (id, prevStatus, status) => {
-    if (prevStatus === status)
-      return (
-        // toast.error("Its already In Processing"),
-        console.log("Sorry it not allowed")
-      );
-    console.log(id, prevStatus, status);
+    if (prevStatus === status) return toast.error("Its already Action");
+
     const { data } = await axios.patch(
       `${import.meta.env.VITE_API_URL}/bid/${id}`,
       { status }
     );
+    // UI Refresh/Update
     getData();
     console.log(data);
   };
-
   return (
     <section className="md:px-4 lg:px-0 mx-auto py-12">
       <div className="flex items-center gap-x-3">
@@ -184,6 +178,7 @@ const BidRequests = () => {
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-6">
+                          {/* Accept Button : In Progress */}
                           <button
                             onClick={() => {
                               handleStatus(bid._id, bid.status, "In Progress");
@@ -206,7 +201,6 @@ const BidRequests = () => {
                               />
                             </svg>
                           </button>
-
                           {/* Reject Button */}
                           <button
                             onClick={() =>

@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+// import Swal from "sweetalert2";
 
 const MyPostedJobs = () => {
   const { user } = useContext(AuthContext);
@@ -27,14 +27,7 @@ const MyPostedJobs = () => {
         `${import.meta.env.VITE_API_URL}/job/${id}`
       );
       console.log(data);
-      // toast.success("Delete Successful");
-      Swal.fire({
-        position: "top-center",
-        icon: "success",
-        title: "Delete Successful",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.success("Delete Successful");
       // refresh UI
       getData();
     } catch (error) {

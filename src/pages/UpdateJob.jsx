@@ -7,8 +7,10 @@ import axios from "axios";
 
 const UpdateJob = () => {
   const { user } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const job = useLoaderData();
+
   const {
     _id,
     category,

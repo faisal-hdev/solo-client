@@ -6,11 +6,11 @@ import axios from "axios";
 const MyBids = () => {
   const { user } = useContext(AuthContext);
   const [bids, setBids] = useState([]);
-  console.log(bids);
 
   useEffect(() => {
     getData();
   }, [user]);
+
   const getData = async () => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_API_URL}/my-bids/${user?.email}`
@@ -18,8 +18,15 @@ const MyBids = () => {
     setBids(data);
   };
 
-  // console.log(bids);
-
+  const handleStatus = async (id, status) => {
+    const { data } = await axios.patch(
+      `${import.meta.env.VITE_API_URL}/bid/${id}`,
+      { status }
+    );
+    // UI Refresh/Update
+    getData();
+    console.log(data);
+  };
   return (
     <section className="md:px-4 lg:px-0 mx-auto py-12">
       <div className="flex items-center gap-x-3">
@@ -110,37 +117,42 @@ const MyBids = () => {
                       </td>
                       <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         <div
-                          className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 text-yellow-500
+                          className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow100/60
                             ${
                               bid.status === "Pending" &&
                               "bg-yellow-100/60 text-yellow-500"
                             }
                             ${
                               bid.status === "In Progress" &&
-                              "bg-blue-100/60 bg-blue-500"
+                              "bg-blue-100/60 text-blue-500"
                             }
                             ${
                               bid.status === "Complete" &&
-                              "bg-emerald-100/60 bg-emerald-500"
+                              "bg-emerald-100/60 text-emerald-500"
                             }
                             ${
                               bid.status === "Rejected" &&
-                              "bg-red-100/60 bg-red-500"
+                              "bg-red-100/60 text-red-500"
                             }
                             `}
                         >
                           <span
-                            className={`h-1.5 w-1.5 rounded-full bg-yellow-500`}
+                            className={`h-1.5 w-1.5 rounded-full    
+                            ${bid.status === "Pending" && "bg-yellow-400"}
+                            ${bid.status === "In Progress" && "bg-blue-400"}
+                            ${bid.status === "Complete" && "bg-emerald-400"}
+                            ${bid.status === "Rejected" && "bg-red-400"}`}
                           ></span>
                           <h2 className="text-sm font-medium">{bid.status}</h2>
                         </div>
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
+                        {/* Complete Button */}
                         <button
                           disabled={bid.status !== "In Progress"}
-                          //   onClick={() => handleStatus(bid._id)}
+                          onClick={() => handleStatus(bid._id, "Complete")}
                           title="Mark Complete"
-                          className="text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none disabled:cursor-not-allowed"
+                          className="text-gray-500 transition-colors duration-200  hover:text-red-500 focus:outline-none disabled:cursor-not-allowed"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
