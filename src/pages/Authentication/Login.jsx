@@ -22,8 +22,6 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithGoogle();
-      console.log(result?.user);
-
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/jwt`,
         {
@@ -54,7 +52,16 @@ const Login = () => {
     try {
       //user login
       const result = await signIn(email, pass);
-      console.log(result);
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/jwt`,
+        {
+          email: result?.user?.email,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(data);
       navigate(form, { replace: true });
       toast.success("Sign in Successful");
     } catch (err) {

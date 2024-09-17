@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import axios from "axios";
 import { app } from "../firebase/firebase.config";
 import {
   GoogleAuthProvider,
@@ -38,6 +39,10 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true);
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+      withCredentials: true,
+    });
+    console.log(data);
     toast.success("Logout Successful");
     return signOut(auth);
   };
