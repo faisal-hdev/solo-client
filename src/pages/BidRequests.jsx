@@ -1,30 +1,53 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const BidRequests = () => {
-  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [bids, setBids] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-    getData();
-  }, [user]);
+  const {
+    data: bids = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryFn: () => getData(),
+    queryKey: ["bids"],
+  });
+  console.log(bids);
+  console.log(isLoading);
+
+  // const [bids, setBids] = useState([]);
+  // useEffect(() => {
+  //   getData();
+  // }, [user]);
 
   const getData = async () => {
     const { data } = await axiosSecure.get(`/bid-request/${user?.email}`);
-    setBids(data);
+    return data;
+    // setBids(data);
   };
 
+  // Handle Status
   const handleStatus = async (id, prevStatus, status) => {
     if (prevStatus === status) return toast.error("Its already Action");
     const { data } = await axiosSecure.patch(`/bid/${id}`, { status });
-    // UI Refresh/Update
-    getData();
     console.log(data);
+
+    // UI Refresh/Update
+    refetch();
+    // getData();
   };
+
+  if (isLoading) return <p>Data is Still loading.......</p>;
+  if (isError || error) {
+    console.log(isError, error);
+  }
   return (
     <section className="md:px-4 lg:px-0 mx-auto py-12">
       <div className="flex items-center gap-x-3">
