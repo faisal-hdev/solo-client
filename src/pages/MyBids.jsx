@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../providers/AuthProvider";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const MyBids = () => {
-  const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const [bids, setBids] = useState([]);
 
   useEffect(() => {
@@ -12,17 +13,12 @@ const MyBids = () => {
   }, [user]);
 
   const getData = async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/my-bids/${user?.email}`
-    );
+    const { data } = await axiosSecure.get(`/my-bids/${user?.email}`);
     setBids(data);
   };
 
   const handleStatus = async (id, status) => {
-    const { data } = await axios.patch(
-      `${import.meta.env.VITE_API_URL}/bid/${id}`,
-      { status }
-    );
+    const { data } = await axiosSecure.patch(`/bid/${id}`, { status });
     // UI Refresh/Update
     getData();
     console.log(data);

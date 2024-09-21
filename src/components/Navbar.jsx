@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import logo from "../assets/images/logo.png";
-import { AuthContext } from "./../providers/AuthProvider";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
   // console.log(user);
   return (
     <div className="navbar bg-base-100 shadow-sm px-4 md:px-12 lg:px-24">

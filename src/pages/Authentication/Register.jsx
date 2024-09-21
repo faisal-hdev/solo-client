@@ -1,10 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import registerBg from "../../assets/images/register.jpg";
-import { useContext } from "react";
-import { AuthContext } from "./../../providers/AuthProvider";
 import toast from "react-hot-toast";
 import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ const Registration = () => {
     createUser,
     signInWithGoogle,
     updateUserProfile,
-  } = useContext(AuthContext);
+  } = useAuth();
 
   // handle signUp
   const handleSignUp = async (e) => {

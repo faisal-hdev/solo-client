@@ -2,7 +2,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import bgImage1 from "../assets/images/carousel1.jpg";
 import bgImage2 from "../assets/images/carousel2.jpg";
 import bgImage3 from "../assets/images/carousel3.jpg";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
