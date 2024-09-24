@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-// import { useEffect, useState } from "react";
+// eslint-disable react-hooks/exhaustive-deps
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const BidRequests = () => {
   const { user } = useAuth();
@@ -19,8 +18,11 @@ const BidRequests = () => {
     queryFn: () => getData(),
     queryKey: ["bids"],
   });
+
   console.log(bids);
   console.log(isLoading);
+  // console.log(isError);
+  // console.log(error);
 
   // const [bids, setBids] = useState([]);
   // useEffect(() => {
@@ -33,15 +35,28 @@ const BidRequests = () => {
     // setBids(data);
   };
 
+  const { mutateAsync } = useMutation({
+    mutationFn: async ({ id, status }) => {
+      const { data } = await axiosSecure.patch(`/bid/${id}`, { status });
+      console.log(data);
+      return data;
+    },
+    onSuccess: () => {
+      console.log("WOW Data updated");
+      // Refresh for the latest data
+      refetch();
+      toast.success("Updated");
+    },
+  });
+
   // Handle Status
   const handleStatus = async (id, prevStatus, status) => {
     if (prevStatus === status) return toast.error("Its already Action");
-    const { data } = await axiosSecure.patch(`/bid/${id}`, { status });
-    console.log(data);
-
+    // const { data } = await axiosSecure.patch(`/bid/${id}`, { status });
+    // console.log(data);
     // UI Refresh/Update
-    refetch();
     // getData();
+    await mutateAsync({ id, status });
   };
 
   if (isLoading) return <p>Data is Still loading.......</p>;
