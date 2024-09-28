@@ -11,6 +11,7 @@ import UpdateJob from "../pages/UpdateJob";
 import PrivetRoute from "./PrivetRoute";
 import MyBids from "../pages/MyBids";
 import BidRequests from "../pages/BidRequests";
+import AllJobs from "../pages/AllJobs";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/job/${params.id}`),
+      },
+      {
+        path: "/jobs",
+        element: <AllJobs />,
       },
     ],
   },

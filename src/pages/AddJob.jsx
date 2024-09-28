@@ -47,8 +47,8 @@ const AddJob = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12 md:px-4 lg:px-0">
-      <section className="p-2 max-md: w-full md:p-6 mx-auto bg-white rounded-md shadow-md ">
+    <div className="flex justify-center items-center min-h-[calc(100vh-310px)] py-12 md:px-4 lg:px-0">
+      <section className="p-2 max-md w-full md:p-6 mx-auto bg-white rounded-md shadow-md ">
         <h2 className="text-lg font-semibold text-gray-700 capitalize ">
           Post a Job
         </h2>

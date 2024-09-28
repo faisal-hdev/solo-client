@@ -7,6 +7,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 const BidRequests = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  // This is not important
+  // const queryClient = useQueryClient();
 
   const {
     data: bids = [],
@@ -16,7 +18,7 @@ const BidRequests = () => {
     refetch,
   } = useQuery({
     queryFn: () => getData(),
-    queryKey: ["bids"],
+    queryKey: ["bids", user?.email],
   });
 
   console.log(bids);
@@ -46,6 +48,12 @@ const BidRequests = () => {
       // Refresh for the latest data
       refetch();
       toast.success("Updated");
+
+      // This is not important
+      // refetch korar kothin way
+      // queryClient.invalidateQueries({
+      //   queryKey: ["bids"],
+      // });
     },
   });
 

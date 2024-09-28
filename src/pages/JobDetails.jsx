@@ -50,24 +50,25 @@ const JobDetails = () => {
       buyer,
     };
 
-    form.reset();
     // Data send to the server
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/bid`,
         bidData
       );
+      console.log(data);
       toast.success("Bid Place Successfully!");
       navigate("/my-bids");
-      console.log(data);
+      // form.reset();
     } catch (error) {
-      toast.error("error.message");
+      toast.success(error.response.data);
+      form.reset();
       console.log(error);
     }
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-around gap-5  items-center min-h-[calc(100vh-306px)] md:max-w-screen-xl mx-auto ">
+    <div className="flex flex-col md:flex-row justify-around gap-5  items-center min-h-[calc(100vh-110px)] md:max-w-screen-xl mx-auto ">
       {/* Job Details */}
       <div className="flex-1  px-4 py-7 bg-white rounded-md shadow-md md:min-h-[350px]">
         <div className="flex items-center justify-between">

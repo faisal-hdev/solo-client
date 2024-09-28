@@ -15,7 +15,9 @@ const MyPostedJobs = () => {
   }, [user]);
 
   const getData = async () => {
-    const { data } = await axiosSecure.get(`/jobs/${user?.email}`);
+    const { data } = await axiosSecure.get(`/jobs/${user?.email}`, {
+      withCredentials: true,
+    });
     setJobs(data);
   };
 
@@ -31,7 +33,6 @@ const MyPostedJobs = () => {
       toast.error(error.message);
     }
   };
-
   return (
     <section className="md:px-4 lg:px-0 mx-auto py-12">
       <div className="flex items-center gap-x-3">
