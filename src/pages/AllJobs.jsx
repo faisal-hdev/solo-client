@@ -7,31 +7,34 @@ import JobCard from "../components/JobCard";
 const AllJobs = () => {
   const axiosSecure = useAxiosSecure();
   const [jobs, setJobs] = useState([]);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
   const [currentPage, setCurrentPage] = useState(1);
   const [count, setCount] = useState(0);
+
+  // Filter category state
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     const getData = async () => {
       const { data } = await axiosSecure.get(
         `${
           import.meta.env.VITE_API_URL
-        }/all-jobs?page=${currentPage}&size=${itemsPerPage}`
+        }/all-jobs?page=${currentPage}&size=${itemsPerPage}&filter=${filter}`
       );
       setJobs(data);
     };
     getData();
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage, filter]);
 
   useEffect(() => {
     const getCount = async () => {
       const { data } = await axiosSecure.get(
-        `${import.meta.env.VITE_API_URL}/jobs-count`
+        `${import.meta.env.VITE_API_URL}/jobs-count?filter=${filter}`
       );
       setCount(data.count);
     };
     getCount();
-  }, []);
+  }, [filter]);
 
   console.log(count);
 
@@ -50,6 +53,11 @@ const AllJobs = () => {
         <div className="flex flex-col md:flex-row justify-center items-center gap-5 ">
           <div>
             <select
+              onChange={(e) => {
+                setFilter(e.target.value);
+                setCurrentPage(1);
+              }}
+              value={filter}
               name="category"
               id="category"
               className="border p-4 rounded-lg"
