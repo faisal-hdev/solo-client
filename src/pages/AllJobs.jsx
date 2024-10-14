@@ -7,7 +7,7 @@ const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(11);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
   const [searchText, setSearchText] = useState("");
 
   // Search input
@@ -29,6 +29,7 @@ const AllJobs = () => {
     getData();
   }, [currentPage, itemsPerPage, filter, sort, search, axiosSecure]);
 
+  // Get the CountData loaded
   useEffect(() => {
     const getCount = async () => {
       const { data } = await axiosSecure.get(

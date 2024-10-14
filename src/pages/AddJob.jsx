@@ -29,9 +29,10 @@ const AddJob = () => {
       max_price,
       description,
       buyer: { email, name: user?.displayName, photo: user?.photoURL },
+      bid_count: 0,
     };
-    console.table(jobData);
 
+    // console.table(jobData);
     // Data send to the server
     try {
       const { data } = await axios.post(
